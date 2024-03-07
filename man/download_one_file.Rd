@@ -2,21 +2,21 @@
 % Please edit documentation in R/download_one_file.R
 \name{download_one_file}
 \alias{download_one_file}
-\title{Allow to download a file with is URL if it doesn't exist already. Write an error message in a document if there is an error.}
+\title{Permet de télécharger un ficheir à partir de son url et d'enregistrer un message d'erreur s'il y en a.}
 \usage{
 download_one_file(excel_file_link, excel_file_path)
 }
 \arguments{
-\item{excel_file_link}{An url link leading to an excel file}
+\item{excel_file_link}{Une URl vers un fichier.}
 
-\item{excel_file_path}{A path indicating where the file should be save}
+\item{excel_file_path}{Un chemin d'accès vers l'endroit où le ficheir doit être enregistré.}
 }
 \value{
-A saving file or an error document
+Un fichier téléchargé et/ou un document d'erreur.
 }
 \description{
-Allow to download a file with is URL if it doesn't exist already. Write an error message in a document if there is an error.
+Permet de télécharger un ficheir à partir de son url et d'enregistrer un message d'erreur s'il y en a.
 }
 \examples{
-#No example
+# Pas d'exemple
 }
