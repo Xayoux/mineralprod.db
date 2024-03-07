@@ -28,6 +28,7 @@ download_one_mineral <- function(mineral_page_link){
 
     # Enlève les fichiers quaterly
     excel_link_list <- excel_link_list[!grepl("\\d{4}q\\d", excel_link_list)]
+    excel_link_list <- excel_link_list[!grepl("\\d{6}", excel_link_list)]
 
     # Créer le répertoire pour les fichiers du minerais
     repertory_path <-

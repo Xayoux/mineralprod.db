@@ -45,8 +45,11 @@ download_all_myb <- function(
       mineral_pages_link_list
     )
 
+  # Setup un travail parallèle avec 4 workers
+  future::plan("multisession", Workers = 4)
+
   # Télécharger chaque page de minerais
-  purrr::walk(
+  furrr::future_walk(
     mineral_pages_link_list,
     mineralprod.db::download_one_mineral
   )
