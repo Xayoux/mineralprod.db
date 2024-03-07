@@ -48,7 +48,7 @@ download_all_myb <- function(
     )
 
   # Setup un travail parallèle avec 4 workers
-  future::plan("multisession", Workers = nb_workers)
+  future::plan(future::multisession, workers = nb_workers)
 
   # Télécharger chaque page de minerais
   furrr::future_walk(
