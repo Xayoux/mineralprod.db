@@ -6,11 +6,14 @@
 \usage{
 launch_download_myb(
   path_usgs_myb =
-    "https://www.usgs.gov/centers/national-minerals-information-center/minerals-yearbook-metals-and-minerals"
+    "https://www.usgs.gov/centers/national-minerals-information-center/minerals-yearbook-metals-and-minerals",
+  nb_workers = 4
 )
 }
 \arguments{
 \item{path_usgs_myb}{Un lien vers la page d'acceuil du myb de USGS. Le lien est rentré par défaut.}
+
+\item{nb_workers}{Le nombre de travailleurs.}
 }
 \value{
 Tous les fichiers Excel du myb.

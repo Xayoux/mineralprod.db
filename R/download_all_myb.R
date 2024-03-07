@@ -1,6 +1,7 @@
 #' Permet de récupérer les liens de toutes les pages du myb et de lancer les téléchargement des fichiers Excel.
 #'
 #' @param path_usgs_myb Un lien vers la page d'acceuil du myb de USGS. Le lien est rentré par défaut.
+#' @param nb_workers Nombre de travailleurs.
 #'
 #' @return Tous les fichiers Excel du myb.
 #' @export

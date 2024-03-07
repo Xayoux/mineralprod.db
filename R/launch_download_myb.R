@@ -1,6 +1,7 @@
 #' Permet de lancer le processus de téléchargement du myb en limitant les risques d'erreur grâce à un fichier compilant les messages d'erreur.
 #'
 #' @param path_usgs_myb Un lien vers la page d'acceuil du myb de USGS. Le lien est rentré par défaut.
+#' @param nb_workers Le nombre de travailleurs.
 #'
 #' @return Tous les fichiers Excel du myb.
 #' @export
