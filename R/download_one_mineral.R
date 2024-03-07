@@ -21,9 +21,13 @@ download_one_mineral <- function(mineral_page_link){
       rvest::html_elements("ul") |>
       rvest::html_elements("li") |>
       rvest::html_elements("a") |>
-      rvest::html_attr("href") %>%
-      { .[grep("\\.(xlsx|xls)$", .)]} %>%
-      { .[!grepl("\\d{4}q\\d", .)] } # Enlève les quaterly
+      rvest::html_attr("href")
+
+    # Garde uniquement les ficheirs xlsx/xls
+    excel_link_list <- excel_link_list[grep("\\.(xlsx|xls)$", excel_link_list)]
+
+    # Enlève les fichiers quaterly
+    excel_link_list <- excel_link_list[!grepl("\\d{4}q\\d", excel_link_list)]
 
     # Créer le répertoire pour les fichiers du minerais
     repertory_path <-

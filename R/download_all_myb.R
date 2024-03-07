@@ -29,8 +29,13 @@ download_all_myb <- function(
     rvest::html_elements("ul") |>
     rvest::html_elements("li") |>
     rvest::html_elements("a") |>
-    rvest::html_attr("href") %>%
-    subset(., . != "NA")
+    rvest::html_attr("href")
+
+  mineral_pages_link_list <-
+    subset(
+      mineral_pages_link_list,
+      mineral_pages_link_list != "NA"
+    )
 
   # Rajouter le début du lien s'il est manquant
   mineral_pages_link_list <-
