@@ -16,12 +16,14 @@ clean_myb_file <- function(excel_path){
     if (endsWith(excel_path, ".xls")){
       df_single_production <-
         readxl::read_excel(
+          excel_path,
           sheet = length(readxl::excel_sheets(excel_path)),
           na = c("--", "-", " ", "W", "w")
         )
     } else if (endsWith(excel_path, ".xlsx")){
       df_single_production <-
         readxl::read_excel(
+          excel_path,
           sheet = length(openxlsx::getSheetNames(excel_path)),
           na = c("--", "-", " ", "W", "w")
         )
@@ -110,6 +112,8 @@ clean_myb_file <- function(excel_path){
         # Remove rows who have just na's
         df_single_production <-
           stats::na.omit(df_single_production[, 1:(ncol(df_single_production) - 1)])
+
+        return(df_single_production)
 
       }
     }

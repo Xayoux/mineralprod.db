@@ -25,19 +25,24 @@ create_db_myb <- function(
   # Remove empty excel files
   folder_data_path |>
     list.files(recursive = TRUE, full.names = TRUE) |>
-    future::future_walk(mineralprod.db::rm_empty_file)
+    furrr::future_walk(mineralprod.db::rm_empty_file)
 
+  future::plan(future::multisession, workers = nb_workers)
   # Clean and merge data
   df_production_global <-
     folder_data_path |>
     list.files(recursive = TRUE, full.names = TRUE) |>
-    future::future_map(mineralprod.db::clean_myb_file)
-
-  print(length(df_production_global))
+    furrr::future_map(mineralprod.db::clean_myb_file)
 
   df_production_global <-
     df_production_global |>
     dplyr::bind_rows()
+
+
+  # Si le chemin d'enregistrement n'est pas changé, vérifier que le dossier existe bien
+  if (path_db == here::here("03-output", "database-mineral-production.csv")){
+    ifelse(dir.exists(here::here("03-output")) == FALSE, dir.create(here::here("03-output")))
+  }
 
   readr::write_csv(
     df_production_global,
