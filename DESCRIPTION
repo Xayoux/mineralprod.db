@@ -18,8 +18,8 @@ Imports:
     janitor,
     openxlsx,
     purrr,
+    readr,
     readxl,
     rvest,
     stringr,
-    tidyr,
-    writexl
+    tidyr
