@@ -7,7 +7,8 @@
 #'
 #' @examples # Pas d'exemple.
 download_all_myb <- function(
-    path_usgs_myb = "https://www.usgs.gov/centers/national-minerals-information-center/minerals-yearbook-metals-and-minerals"
+    path_usgs_myb = "https://www.usgs.gov/centers/national-minerals-information-center/minerals-yearbook-metals-and-minerals",
+    nb_workers = 4
 ){
 
   # Supprimmer les fichiers d'erreurs s'ils existent
@@ -46,7 +47,7 @@ download_all_myb <- function(
     )
 
   # Setup un travail parallèle avec 4 workers
-  future::plan("multisession", Workers = 4)
+  future::plan("multisession", Workers = nb_workers)
 
   # Télécharger chaque page de minerais
   furrr::future_walk(
