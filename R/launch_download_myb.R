@@ -15,6 +15,11 @@ launch_download_myb <- function(
     file.remove("messages-errors-global.txt")
   }
 
+  # Ajouter répertoire 01-data s'il n'existe pas
+  if (dir.exists(here::here("01-data")) == FALSE){
+    dir.create(here::here("01-data"))
+  }
+
   # Tester le code
   tryCatch({
 
