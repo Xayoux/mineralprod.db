@@ -116,14 +116,14 @@ clean_myb_file <- function(excel_path){
           df_single_production |>
 
           # Enlève les lignes qui sont country ou locality dans la variable country
-          filter(
+          dplyr::filter(
             !grepl("country|locality", country, ignore.case = TRUE)
           ) |>
-          mutate(
+          dplyr::mutate(
 
             # Extraire la métrique utilisée pour les valeurs de production
             metric_unit =
-              case_when(
+              dplyr::case_when(
                 grepl("tons", metric, ignore.case = TRUE) == TRUE ~ "tons",
                 grepl("kilograms", metric, ignore.case = TRUE) == TRUE ~ "kg",
                 grepl("cubic", metric, ignore.case = TRUE) == TRUE ~ "cubic",
@@ -133,7 +133,7 @@ clean_myb_file <- function(excel_path){
 
             # Extraire le scalaire multiplicateur
             multiplicator =
-              case_when(
+              dplyr::case_when(
                 grepl("thousand", metric, ignore.case = TRUE) == TRUE ~ 1000,
                 grepl("million", metric, ignore.case = TRUE) == TRUE ~ 1000000,
                 .default = 1
@@ -147,7 +147,7 @@ clean_myb_file <- function(excel_path){
           ) |>
 
           # Garder uniquement les variables d'intérêt
-          select(
+          dplyr::select(
             country, year,prod_value, product, metric,
             metric_unit, multiplicator, prod_value_adjust
           )
