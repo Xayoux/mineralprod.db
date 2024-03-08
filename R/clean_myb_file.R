@@ -7,6 +7,8 @@
 #'
 #' @examples # Pas d'exemple
 clean_myb_file <- function(excel_path){
+  options(scipen = 999)
+
   tryCatch({
 
     # Open the excel file at the last sheets
@@ -104,14 +106,51 @@ clean_myb_file <- function(excel_path){
 
             # Enlève les espaces
             country = stringr::str_trim(country)
-          ) |>
-          dplyr::filter(
-            country != "Total"
           )
 
         # Remove rows who have just na's
         df_single_production <-
           stats::na.omit(df_single_production[, 1:(ncol(df_single_production) - 1)])
+
+        df_single_production <-
+          df_single_production |>
+
+          # Enlève les lignes qui sont country ou locality dans la variable country
+          filter(
+            !grepl("country|locality", country, ignore.case = TRUE)
+          ) |>
+          mutate(
+
+            # Extraire la métrique utilisée pour les valeurs de production
+            metric_unit =
+              case_when(
+                grepl("tons", metric, ignore.case = TRUE) == TRUE ~ "tons",
+                grepl("kilograms", metric, ignore.case = TRUE) == TRUE ~ "kg",
+                grepl("cubic", metric, ignore.case = TRUE) == TRUE ~ "cubic",
+                grepl("carats", metric, ignore.case = TRUE) == TRUE ~ "carats",
+                metric == "(Metric)" & product == "zeolites" ~ "tons"
+              ),
+
+            # Extraire le scalaire multiplicateur
+            multiplicator =
+              case_when(
+                grepl("thousand", metric, ignore.case = TRUE) == TRUE ~ 1000,
+                grepl("million", metric, ignore.case = TRUE) == TRUE ~ 1000000,
+                .default = 1
+              ),
+
+            # Transformer les données de production en valeurs numériques
+            prod_value = as.numeric(prod_value),
+
+            # Calculer les productions ajustées par le scalaire
+            prod_value_adjust_metric = prod_value * multiplicator
+          ) |>
+
+          # Garder uniquement les variables d'intérêt
+          select(
+            country, year,prod_value, product, metric,
+            metric_unit, multiplicator, prod_value_adjust
+          )
 
         return(df_single_production)
 
