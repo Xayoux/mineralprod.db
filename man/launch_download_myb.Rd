@@ -2,7 +2,7 @@
 % Please edit documentation in R/launch_download_myb.R
 \name{launch_download_myb}
 \alias{launch_download_myb}
-\title{Permet de lancer le processus de téléchargement du myb en limitant les risques d'erreur grâce à un fichier compilant les messages d'erreur.}
+\title{Permet de lancer le processus de téléchargement du myb en limitant les risques d'erreur grâce à un fichier compilant les messages d'erreur. Crée également automatiquement le dossier d'enregistrement des données s'il n'existe pas.}
 \usage{
 launch_download_myb(
   path_usgs_myb =
@@ -22,7 +22,7 @@ launch_download_myb(
 Tous les fichiers Excel du myb.
 }
 \description{
-Permet de lancer le processus de téléchargement du myb en limitant les risques d'erreur grâce à un fichier compilant les messages d'erreur.
+Permet de lancer le processus de téléchargement du myb en limitant les risques d'erreur grâce à un fichier compilant les messages d'erreur. Crée également automatiquement le dossier d'enregistrement des données s'il n'existe pas.
 }
 \examples{
 # Pas d'exemple.

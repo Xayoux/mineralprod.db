@@ -1,4 +1,4 @@
-#' Permet de lancer le processus de téléchargement du myb en limitant les risques d'erreur grâce à un fichier compilant les messages d'erreur.
+#' Permet de lancer le processus de téléchargement du myb en limitant les risques d'erreur grâce à un fichier compilant les messages d'erreur. Crée également automatiquement le dossier d'enregistrement des données s'il n'existe pas.
 #'
 #' @param path_usgs_myb Un lien vers la page d'acceuil du myb de USGS. Le lien est rentré par défaut.
 #' @param nb_workers Le nombre de travailleurs.
@@ -20,8 +20,8 @@ launch_download_myb <- function(
   }
 
   # Ajouter répertoire 01-data s'il n'existe pas
-  if (dir.exists(here::here("01-data")) == FALSE){
-    dir.create(here::here("01-data"))
+  if (dir.exists(folder_path) == FALSE){
+    dir.create(folder_path)
   }
 
   # Tester le code
