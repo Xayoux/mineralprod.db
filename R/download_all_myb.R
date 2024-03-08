@@ -2,6 +2,7 @@
 #'
 #' @param path_usgs_myb Un lien vers la page d'acceuil du myb de USGS. Le lien est rentré par défaut.
 #' @param nb_workers Nombre de travailleurs.
+#' @param folder_path Chemin d'accès au répertoire d'enregistrement global des données.
 #'
 #' @return Tous les fichiers Excel du myb.
 #' @export
@@ -9,7 +10,8 @@
 #' @examples # Pas d'exemple.
 download_all_myb <- function(
     path_usgs_myb = "https://www.usgs.gov/centers/national-minerals-information-center/minerals-yearbook-metals-and-minerals",
-    nb_workers = 4
+    nb_workers = 4,
+    folder_path = here::here("01-data")
 ){
 
   # Supprimmer les fichiers d'erreurs s'ils existent
@@ -33,6 +35,7 @@ download_all_myb <- function(
     rvest::html_elements("a") |>
     rvest::html_attr("href")
 
+  # Enlever les éléments manquants de la liste
   mineral_pages_link_list <-
     subset(
       mineral_pages_link_list,
@@ -53,6 +56,6 @@ download_all_myb <- function(
   # Télécharger chaque page de minerais
   furrr::future_walk(
     mineral_pages_link_list,
-    mineralprod.db::download_one_mineral
+    \(link_list) mineralprod.db::download_one_mineral(link_list, folder_path = folder_path)
   )
 }
