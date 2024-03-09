@@ -4,13 +4,15 @@
 \alias{download_one_mineral}
 \title{Permet de télécharger tous les fichiers excel d'une page du myb USGS}
 \usage{
-download_one_mineral(mineral_page_link)
+download_one_mineral(mineral_page_link, folder_path = here::here("01-data"))
 }
 \arguments{
-\item{mineral_page_link}{Un lien URl vers une page du myb pour un minerais}
+\item{mineral_page_link}{Un lien URL vers une page du myb pour un minerais}
+
+\item{folder_path}{Chemin d'accès au dossier d'enregistrement des fichiers}
 }
 \value{
-Chaque fichier du pyb téléchargé pour le minerais en question
+Chaque fichier du myb téléchargé pour le minerais en question
 }
 \description{
 Permet de télécharger tous les fichiers excel d'une page du myb USGS

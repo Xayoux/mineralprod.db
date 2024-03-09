@@ -2,21 +2,27 @@
 % Please edit documentation in R/launch_download_myb.R
 \name{launch_download_myb}
 \alias{launch_download_myb}
-\title{Permet de lancer le processus de téléchargement du myb en limitant les risques d'erreur grâce à un fichier compilant les messages d'erreur.}
+\title{Permet de lancer le processus de téléchargement du myb en limitant les risques d'erreur grâce à un fichier compilant les messages d'erreur. Crée également automatiquement le dossier d'enregistrement des données s'il n'existe pas.}
 \usage{
 launch_download_myb(
   path_usgs_myb =
-    "https://www.usgs.gov/centers/national-minerals-information-center/minerals-yearbook-metals-and-minerals"
+    "https://www.usgs.gov/centers/national-minerals-information-center/minerals-yearbook-metals-and-minerals",
+  nb_workers = 4,
+  folder_path = here::here("01-data")
 )
 }
 \arguments{
 \item{path_usgs_myb}{Un lien vers la page d'acceuil du myb de USGS. Le lien est rentré par défaut.}
+
+\item{nb_workers}{Le nombre de travailleurs.}
+
+\item{folder_path}{Chemin d'accès au répertoire d'enregistrement global des données.}
 }
 \value{
 Tous les fichiers Excel du myb.
 }
 \description{
-Permet de lancer le processus de téléchargement du myb en limitant les risques d'erreur grâce à un fichier compilant les messages d'erreur.
+Permet de lancer le processus de téléchargement du myb en limitant les risques d'erreur grâce à un fichier compilant les messages d'erreur. Crée également automatiquement le dossier d'enregistrement des données s'il n'existe pas.
 }
 \examples{
 # Pas d'exemple.

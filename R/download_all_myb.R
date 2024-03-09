@@ -1,13 +1,17 @@
 #' Permet de récupérer les liens de toutes les pages du myb et de lancer les téléchargement des fichiers Excel.
 #'
 #' @param path_usgs_myb Un lien vers la page d'acceuil du myb de USGS. Le lien est rentré par défaut.
+#' @param nb_workers Nombre de travailleurs.
+#' @param folder_path Chemin d'accès au répertoire d'enregistrement global des données.
 #'
 #' @return Tous les fichiers Excel du myb.
 #' @export
 #'
 #' @examples # Pas d'exemple.
 download_all_myb <- function(
-    path_usgs_myb = "https://www.usgs.gov/centers/national-minerals-information-center/minerals-yearbook-metals-and-minerals"
+    path_usgs_myb = "https://www.usgs.gov/centers/national-minerals-information-center/minerals-yearbook-metals-and-minerals",
+    nb_workers = 4,
+    folder_path = here::here("01-data")
 ){
 
   # Supprimmer les fichiers d'erreurs s'ils existent
@@ -29,8 +33,14 @@ download_all_myb <- function(
     rvest::html_elements("ul") |>
     rvest::html_elements("li") |>
     rvest::html_elements("a") |>
-    rvest::html_attr("href") %>%
-    subset(., . != "NA")
+    rvest::html_attr("href")
+
+  # Enlever les éléments manquants de la liste
+  mineral_pages_link_list <-
+    subset(
+      mineral_pages_link_list,
+      mineral_pages_link_list != "NA"
+    )
 
   # Rajouter le début du lien s'il est manquant
   mineral_pages_link_list <-
@@ -40,9 +50,12 @@ download_all_myb <- function(
       mineral_pages_link_list
     )
 
+  # Setup un travail parallèle avec 4 workers
+  future::plan(future::multisession, workers = nb_workers)
+
   # Télécharger chaque page de minerais
-  purrr::walk(
+  furrr::future_walk(
     mineral_pages_link_list,
-    mineralprod.db::download_one_mineral
+    \(link_list) mineralprod.db::download_one_mineral(link_list, folder_path = folder_path)
   )
 }

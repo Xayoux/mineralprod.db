@@ -12,12 +12,14 @@ URL: https://github.com/Xayoux/mineralprod.db
 BugReports: https://github.com/Xayoux/mineralprod.db/issues
 Imports: 
     dplyr,
+    furrr,
+    future,
     here,
     janitor,
     openxlsx,
     purrr,
+    readr,
     readxl,
     rvest,
     stringr,
-    tidyr,
-    writexl
+    tidyr

@@ -1,12 +1,13 @@
 #' Permet de télécharger tous les fichiers excel d'une page du myb USGS
 #'
-#' @param mineral_page_link Un lien URl vers une page du myb pour un minerais
+#' @param mineral_page_link Un lien URL vers une page du myb pour un minerais
+#' @param folder_path Chemin d'accès au dossier d'enregistrement des fichiers
 #'
-#' @return Chaque fichier du pyb téléchargé pour le minerais en question
+#' @return Chaque fichier du myb téléchargé pour le minerais en question
 #' @export
 #'
 #' @examples # Pas d'exemple
-download_one_mineral <- function(mineral_page_link){
+download_one_mineral <- function(mineral_page_link, folder_path = here::here("01-data")){
 
   # Essaie le code et catch s'il y a une erreur
   tryCatch({
@@ -21,14 +22,19 @@ download_one_mineral <- function(mineral_page_link){
       rvest::html_elements("ul") |>
       rvest::html_elements("li") |>
       rvest::html_elements("a") |>
-      rvest::html_attr("href") %>%
-      { .[grep("\\.(xlsx|xls)$", .)]} %>%
-      { .[!grepl("\\d{4}q\\d", .)] } # Enlève les quaterly
+      rvest::html_attr("href")
+
+    # Garde uniquement les ficheirs xlsx/xls
+    excel_link_list <- excel_link_list[grep("\\.(xlsx|xls)$", excel_link_list)]
+
+    # Enlève les fichiers quaterly
+    excel_link_list <- excel_link_list[!grepl("\\d{4}q\\d", excel_link_list)]
+    excel_link_list <- excel_link_list[!grepl("\\d{6}", excel_link_list)]
 
     # Créer le répertoire pour les fichiers du minerais
     repertory_path <-
       here::here(
-        "01-data",
+        folder_path,
         sub(".*/", "", mineral_page_link) # Garder que le nom du minerais
       )
 
@@ -36,11 +42,9 @@ download_one_mineral <- function(mineral_page_link){
 
     # Créer les liens d'enregistrement des fichiers
     liste_path <-
-      paste(
+      here::here(
         repertory_path,
-        "/",
-        sub(".*/", "", excel_link_list), # Garder que le nom du fichier
-        sep = ""
+        sub(".*/", "", excel_link_list)
       )
 
     # Télécharger tous les fichiers de la page en cours
