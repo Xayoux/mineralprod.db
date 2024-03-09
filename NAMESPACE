@@ -2,6 +2,7 @@
 
 export(clean_myb_file)
 export(create_db_myb)
+export(db_myb)
 export(download_all_myb)
 export(download_one_file)
 export(download_one_mineral)
