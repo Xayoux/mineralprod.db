@@ -31,6 +31,7 @@ clean_myb_file <- function(excel_path){
         )
     }
 
+
     # Teste si le dataframe à plus de 5 lignes (car l'entpete prend 5 lignes)
 
     if(nrow(df_single_production)>=5){
@@ -108,6 +109,7 @@ clean_myb_file <- function(excel_path){
             country = stringr::str_trim(country)
           )
 
+
         # Remove rows who have just na's
         df_single_production <-
           stats::na.omit(df_single_production[, 1:(ncol(df_single_production) - 1)])
@@ -148,8 +150,8 @@ clean_myb_file <- function(excel_path){
 
           # Garder uniquement les variables d'intérêt
           dplyr::select(
-            country, year,prod_value, product, metric,
-            metric_unit, multiplicator, prod_value_adjust
+            country, year, prod_value, product, metric, metric_unit,
+            multiplicator, prod_value_adjust_metric
           )
 
         return(df_single_production)

@@ -41,7 +41,9 @@ create_db_myb <- function(
 
   # Si le chemin d'enregistrement n'est pas changé, vérifier que le dossier existe bien
   if (path_db == here::here("03-output", "database-mineral-production.csv")){
-    ifelse(dir.exists(here::here("03-output")) == FALSE, dir.create(here::here("03-output")))
+    if(dir.exists(here::here("03-output")) == FALSE){
+      dir.create(here::here("03-output"))
+    }
   }
 
   readr::write_csv(
